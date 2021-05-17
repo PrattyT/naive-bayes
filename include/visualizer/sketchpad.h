@@ -1,10 +1,14 @@
 #pragma once
 
+#include <core/image.h>
+
 #include "cinder/gl/gl.h"
 
 namespace naivebayes {
 
 namespace visualizer {
+
+
 
 /**
  * A sketchpad which will be displayed in the Cinder application and respond to
@@ -44,13 +48,20 @@ class Sketchpad {
    */
   void HandleBrush(const glm::vec2& brush_screen_coords);
 
+  vector<vector<bool>> GetImage();
+
   /**
    * Set all of the sketchpad pixels to an unshaded state.
    */
   void Clear();
 
+
  private:
   glm::vec2 top_left_corner_;
+
+  std::vector<std::vector<bool>> image_;
+
+  void NewImage(size_t size);
 
   size_t num_pixels_per_side_;
 
@@ -58,6 +69,8 @@ class Sketchpad {
   double pixel_side_length_;
 
   double brush_radius_;
+
+
 };
 
 }  // namespace visualizer

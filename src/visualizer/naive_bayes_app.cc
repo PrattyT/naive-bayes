@@ -1,8 +1,12 @@
+#include <core/classifier.h>
 #include <visualizer/naive_bayes_app.h>
+#include <visualizer/sketchpad.h>
 
 namespace naivebayes {
 
 namespace visualizer {
+
+
 
 NaiveBayesApp::NaiveBayesApp()
     : sketchpad_(glm::vec2(kMargin, kMargin), kImageDimension,
@@ -35,16 +39,19 @@ void NaiveBayesApp::mouseDrag(ci::app::MouseEvent event) {
 
 void NaiveBayesApp::keyDown(ci::app::KeyEvent event) {
   switch (event.getCode()) {
-    case ci::app::KeyEvent::KEY_RETURN:
-      // ask your classifier to classify the image that's currently drawn on the
-      // sketchpad and update current_prediction_
+    case ci::app::KeyEvent::KEY_RETURN: {
+      vector<vector<bool>> vector = sketchpad_.GetImage();
+      Image image(vector);
+      current_prediction_ = classifier.ClassifyImage(image);
       break;
+    }
 
     case ci::app::KeyEvent::KEY_DELETE:
       sketchpad_.Clear();
       break;
   }
 }
+
 
 }  // namespace visualizer
 
